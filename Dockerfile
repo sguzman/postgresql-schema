@@ -3,9 +3,7 @@ FROM postgres:10.5-alpine
 USER postgres
 ENV LANG en_US.utf8
 
-
 COPY init.sql /docker-entrypoint-initdb.d/
-
 
 RUN chmod 0700 /var/lib/postgresql/data &&\
     initdb /var/lib/postgresql/data &&\
