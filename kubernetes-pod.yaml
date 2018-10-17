@@ -15,12 +15,20 @@ kind: Pod
 metadata:
   namespace: default
   name: postgres-scraper
+  labels:
+    app: postgres
 spec:
+  restartPolicy: Always
   containers:
     - image: docker.io/guzmansalv/youtube_postgres
+      imagePullPolicy: Always
       name: postgres
       ports:
         - containerPort: 5432
           name: postgres
     - image: docker.io/guzmansalv/dbase_channels
-      name: scraper
+      imagePullPolicy: Always
+      name: dbase_scraper
+    - image: 'guzmansalv/youtube_scraper
+      imagePullPolicy: Always
+      name: youtube_scaper
