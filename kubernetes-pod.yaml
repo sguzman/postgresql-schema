@@ -58,6 +58,7 @@ metadata:
     app: postgres
     name: youtube
 spec:
+  hostname: postgres-pod
   securityContext:
     fsGroup: 1234
     runAsUser: 0
