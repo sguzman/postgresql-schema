@@ -6,6 +6,37 @@ metadata:
     name: youtube
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: youtube-pv-volume
+  namespace: youtube
+  labels:
+    type: local
+    name: youtube
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/data/db"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: youtube-pv-claim
+  labels:
+    name: youtube
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
 kind: Service
 metadata:
   namespace: youtube
@@ -28,7 +59,12 @@ metadata:
     app: postgres
     name: youtube
 spec:
+  volumes:
+    - name: youtube-pv-storage
+      persistentVolumeClaim:
+        claimName: youtube-pv-claim
   restartPolicy: Always
+
   containers:
     - image: docker.io/guzmansalv/youtube_postgres
       imagePullPolicy: Always
@@ -36,9 +72,13 @@ spec:
       ports:
         - containerPort: 5432
           name: postgres
+      volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: task-pv-storage
     - image: docker.io/guzmansalv/dbase_channels
       imagePullPolicy: Always
       name: dbase_scraper
     - image: guzmansalv/youtube_scraper
       imagePullPolicy: Always
       name: youtube_scaper
+
