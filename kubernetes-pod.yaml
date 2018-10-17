@@ -29,6 +29,6 @@ spec:
     - image: docker.io/guzmansalv/dbase_channels
       imagePullPolicy: Always
       name: dbase_scraper
-    - image: 'guzmansalv/youtube_scraper
+    - image: guzmansalv/youtube_scraper
       imagePullPolicy: Always
       name: youtube_scaper
