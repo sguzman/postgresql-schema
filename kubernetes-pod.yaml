@@ -10,6 +10,8 @@ kind: PersistentVolume
 metadata:
   name: youtube-pv-volume
   namespace: youtube
+  annotations:
+    pv.beta.kubernetes.io/gid: "1234"
   labels:
     type: local
     name: youtube
@@ -59,12 +61,13 @@ metadata:
     app: postgres
     name: youtube
 spec:
+  securityContext:
+    - fsGroup: 1234
   volumes:
     - name: youtube-pv-storage
       persistentVolumeClaim:
         claimName: youtube-pv-claim
   restartPolicy: Always
-
   containers:
     - image: docker.io/guzmansalv/youtube_postgres
       imagePullPolicy: Always
