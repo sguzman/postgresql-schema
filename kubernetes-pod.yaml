@@ -53,7 +53,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   namespace: youtube
-  name: postgres-scraper
+  name: postgres-pod
   labels:
     app: postgres
     name: youtube
@@ -76,10 +76,33 @@ spec:
       volumeMounts:
         - mountPath: "/var/lib/postgresql/data"
           name: youtube-pv-storage
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: youtube
+  name: dbase-scraper
+  labels:
+    app: postgres
+    name: youtube
+spec:
+  restartPolicy: Always
+  containers:
     - image: docker.io/guzmansalv/dbase_channels
       imagePullPolicy: Always
       name: dbase-scraper
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: youtube
+  name: youtube-scraper
+  labels:
+    app: postgres
+    name: youtube
+spec:
+  restartPolicy: Always
+  containers:
     - image: guzmansalv/youtube_scraper
       imagePullPolicy: Always
       name: youtube-scaper
-
