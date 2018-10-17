@@ -21,7 +21,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   namespace: youtube
-  name: postgres-scraper
+  name: postgres_scraper
   labels:
     app: postgres
 spec:
