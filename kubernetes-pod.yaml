@@ -51,7 +51,7 @@ spec:
       protocol: TCP
       port: 5432
       targetPort: 5432
-      nodePort: 5432
+      nodePort: 30000
   selector:
     app: postgres
   type: NodePort
