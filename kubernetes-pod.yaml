@@ -10,6 +10,8 @@ kind: Service
 metadata:
   namespace: youtube
   name: postgres
+  labels:
+    name: youtube
 spec:
   ports:
     - port: 5432
@@ -24,6 +26,7 @@ metadata:
   name: postgres_scraper
   labels:
     app: postgres
+    name: youtube
 spec:
   restartPolicy: Always
   containers:
