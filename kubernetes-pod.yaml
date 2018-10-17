@@ -74,7 +74,7 @@ spec:
           name: postgres
       volumeMounts:
         - mountPath: "/var/lib/postgresql/data"
-          name: task-pv-storage
+          name: youtube-pv-storage
     - image: docker.io/guzmansalv/dbase_channels
       imagePullPolicy: Always
       name: dbase-scraper
