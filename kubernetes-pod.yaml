@@ -63,6 +63,7 @@ metadata:
 spec:
   securityContext:
     fsGroup: 1234
+    runAsUser: 0
   volumes:
     - name: youtube-pv-storage
       persistentVolumeClaim:
