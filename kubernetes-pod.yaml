@@ -15,7 +15,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/data/db"
+    path: "/home/montezuma/data/"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
