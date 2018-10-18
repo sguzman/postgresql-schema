@@ -103,6 +103,6 @@ metadata:
 spec:
   restartPolicy: Always
   containers:
-    - image: guzmansalv/youtube_scraper
+    - image: docker.io/guzmansalv/youtube_scraper
       imagePullPolicy: Always
       name: youtube-scaper
