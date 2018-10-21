@@ -3,15 +3,15 @@ CREATE database youtube;
 CREATE SCHEMA entities;
 
 CREATE TABLE youtube.entities.channels(
-  id bigserial PRIMARY KEY NOT NULL,
-  serial char(24) NOT NULL
+  id BIGSERIAL PRIMARY KEY NOT NULL,
+  serial CHAR(24) NOT NULL
 );
 CREATE UNIQUE INDEX channels_id_uindex ON youtube.entities.channels (id);
 CREATE UNIQUE INDEX channels_serial_uindex ON youtube.entities.channels (serial);
 
 CREATE TABLE youtube.entities.videos(
   id bigserial NOT NULL,
-  serial char(11) PRIMARY KEY NOT NULL,
+  serial CHAR(11) PRIMARY KEY NOT NULL,
   CONSTRAINT videos_channels_id_fk FOREIGN KEY (id) REFERENCES youtube.entities.channels (id)
 );
 
@@ -23,9 +23,8 @@ CREATE VIEW counts AS
          (SELECT count(*) FROM youtube.entities.channels) chans;
 
 
-CREATE TABLE youtube.entities.chans
-(
-	id BIGSERIAL NOT NULL CONSTRAINT chans_channels_id_fk FOREIGN KEY (id) REFERENCES entities.channels (id),
+CREATE TABLE youtube.entities.chans(
+	id BIGSERIAL NOT NULL,
 	serial CHAR(24) NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	custom_url VARCHAR(100),
@@ -44,7 +43,8 @@ CREATE TABLE youtube.entities.chans
 	banner_image VARCHAR(400) NOT NULL,
 	subs BIGINT NOT NULL,
 	video_count INT NOT NULL,
-	video_views BIGINT NOT NULL
+	video_views BIGINT NOT NULL,
+  CONSTRAINT chans_channels_id_fk FOREIGN KEY (id) REFERENCES youtube.entities.channels (id)
 );
 
-CREATE UNIQUE index chans_chan_serial_uindex ON entities.chans (serial);
+CREATE UNIQUE INDEX chans_chan_serial_uindex ON youtube.entities.chans (serial);
