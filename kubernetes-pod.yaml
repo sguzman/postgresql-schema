@@ -106,3 +106,17 @@ spec:
     - image: docker.io/guzmansalv/youtube_scraper
       imagePullPolicy: Always
       name: youtube-scaper
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: youtube
+  name: youtube-stats-scraper
+  labels:
+    name: youtube
+spec:
+  restartPolicy: Always
+  containers:
+    - image: docker.io/guzmansalv/youtube_chan_stats
+      imagePullPolicy: Always
+      name: youtube-stats-scraper
