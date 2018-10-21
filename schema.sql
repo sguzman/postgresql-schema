@@ -80,3 +80,8 @@ CREATE TABLE youtube.entities.vids(
 );
 
 CREATE UNIQUE INDEX vids_serial_uindex ON youtube.entities.vids (serial);
+
+CREATE VIEW cnt AS
+  SELECT
+         (SELECT count(*) FROM youtube.entities.vids) vids,
+         (SELECT count(*) FROM youtube.entities.chans) chans;
