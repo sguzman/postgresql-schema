@@ -25,7 +25,7 @@ CREATE VIEW counts AS
 
 CREATE TABLE youtube.entities.chans
 (
-	id BIGSERIAL NOT NULL CONSTRAINT chans_pkey PRIMARY KEY,
+	id BIGSERIAL NOT NULL CONSTRAINT chans_channels_id_fk FOREIGN KEY (id) REFERENCES entities.channels (id),
 	serial CHAR(24) NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	custom_url VARCHAR(100),
@@ -47,8 +47,4 @@ CREATE TABLE youtube.entities.chans
 	video_views BIGINT NOT NULL
 );
 
-CREATE UNIQUE index chans_id_uindex
-	ON entities.chans (id);
-
-CREATE UNIQUE index chans_chan_serial_uindex
-	ON entities.chans (serial);
+CREATE UNIQUE index chans_chan_serial_uindex ON entities.chans (serial);
