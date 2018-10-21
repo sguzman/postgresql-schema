@@ -48,3 +48,35 @@ CREATE TABLE youtube.entities.chans(
 );
 
 CREATE UNIQUE INDEX chans_chan_serial_uindex ON youtube.entities.chans (serial);
+
+CREATE TABLE youtube.entities.vids(
+	serial CHAR(11) NOT NULL,
+  published_at TIMESTAMP NOT NULL,
+  channel_id CHAR(24) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  description VARCHAR(8000) NOT NULL,
+  thumbnail VARCHAR(400) NOT NULL,
+  category_id INT NOT NULL,
+  live_broadcasting_content VARCHAR(10),
+  default_audio_language VARCHAR(20),
+  duration INTERVAL NOT NULL,
+  dimension CHAR(2) NOT NULL,
+  definition CHAR(2) NOT NULL,
+  caption BOOLEAN NOT NULL,
+  licensed_content BOOLEAN NOT NULL,
+  projection VARCHAR(15) NOT NULL,
+  upload_status VARCHAR(30) NOT NULL,
+  privacy_status VARCHAR(10) NOT NULL,
+  license VARCHAR(15) NOT NULL,
+  embeddable BOOLEAN NOT NULL,
+  public_stats_viewable BOOLEAN NOT NULL,
+  relevant_topic_ids VARCHAR(10) [],
+  topic_categories VARCHAR(100) [],
+  view_count BIGINT not null,
+  like_count INT NOT NULL,
+  dislike_count INT NOT NULL,
+  favorite_count INT NOT NULL,
+  comment_count INT NOT NULL
+);
+
+CREATE UNIQUE INDEX vids_serial_uindex ON youtube.entities.vids (serial);
