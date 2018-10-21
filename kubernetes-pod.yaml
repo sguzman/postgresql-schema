@@ -137,3 +137,6 @@ spec:
     - image: docker.io/guzmansalv/youtube_vid_stats
       imagePullPolicy: Always
       name: youtube-vid-scaper
+      env:
+        - name: API_KEY
+          value: "AIzaSyAOJey2cpa5GdTXRfU73ocrmeW188soOv8|AIzaSyAMrmQxJcjbYpHNfVIeJH7JxmjD2AtZkr0|AIzaSyDb5la9mzV4npKYzZC7nEOVBri3jA-XuRU|AIzaSyDZOhJUEdWBWtrIX53slXY3x3dczTqIkSc|AIzaSyC38ZIaFBDP1mtPqpx6oGGm60WGFFMHJgQ|AIzaSyBo8rwEPhWxcb1rIAMQQmTtpYPbF4pL3kw"
