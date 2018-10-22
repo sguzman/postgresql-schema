@@ -3,16 +3,12 @@ CREATE database youtube;
 CREATE SCHEMA entities;
 
 CREATE TABLE youtube.entities.channels(
-  id BIGSERIAL PRIMARY KEY NOT NULL,
-  serial CHAR(24) NOT NULL
+  serial CHAR(24) PRIMARY KEY NOT NULL
 );
-CREATE UNIQUE INDEX channels_id_uindex ON youtube.entities.channels (id);
 CREATE UNIQUE INDEX channels_serial_uindex ON youtube.entities.channels (serial);
 
 CREATE TABLE youtube.entities.videos(
-  id bigserial NOT NULL,
   serial CHAR(11) PRIMARY KEY NOT NULL,
-  CONSTRAINT videos_channels_id_fk FOREIGN KEY (id) REFERENCES youtube.entities.channels (id)
 );
 
 CREATE UNIQUE INDEX videos_serial_uindex ON youtube.entities.videos (serial);
@@ -24,7 +20,6 @@ CREATE VIEW counts AS
 
 
 CREATE TABLE youtube.entities.chans(
-	id BIGSERIAL NOT NULL,
 	serial CHAR(24) NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	custom_url VARCHAR(100),
