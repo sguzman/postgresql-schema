@@ -36,9 +36,6 @@ CREATE TABLE youtube.entities.chans(
 	show_related_channels BOOLEAN,
 	show_browse BOOLEAN,
 	banner_image VARCHAR(400) NOT NULL,
-	subs BIGINT NOT NULL,
-	video_count INT NOT NULL,
-	video_views BIGINT NOT NULL,
   CONSTRAINT chans_channels_id_fk FOREIGN KEY (id) REFERENCES youtube.entities.channels (id)
 );
 
@@ -66,12 +63,7 @@ CREATE TABLE youtube.entities.vids(
   embeddable BOOLEAN NOT NULL,
   public_stats_viewable BOOLEAN NOT NULL,
   relevant_topic_ids VARCHAR(10) [],
-  topic_categories VARCHAR(100) [],
-  view_count BIGINT not null,
-  like_count INT NOT NULL,
-  dislike_count INT NOT NULL,
-  favorite_count INT NOT NULL,
-  comment_count INT NOT NULL
+  topic_categories VARCHAR(100) []
 );
 
 CREATE UNIQUE INDEX vids_serial_uindex ON youtube.entities.vids (serial);
