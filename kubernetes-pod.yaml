@@ -101,7 +101,7 @@ metadata:
     name: youtube
     tier: youtube-chan-stats-replicaset
 spec:
-  replicas: 5
+  replicas: 10
   selector:
     matchLabels:
       tier: youtube-chan-stats-replicaset
@@ -125,3 +125,23 @@ spec:
               value: "postgres-service.youtube.svc.cluster.local"
             - name: DB_PORT
               value: "5432"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: hello
+              image: busybox
+              args:
+                - /bin/sh
+                - -c
+                - psql --host=postgres-service.youtube.svc.cluster.local --user=postgres --port=5432 --no-password youtube -c 'delete from youtube.entities.chan_stats where views = 0 AND videos = 0'
+          restartPolicy: OnFailure
