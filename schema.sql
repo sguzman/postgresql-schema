@@ -23,8 +23,7 @@ CREATE TABLE youtube.entities.chans(
 	moderate_comments BOOLEAN,
 	show_related_channels BOOLEAN,
 	show_browse BOOLEAN,
-	banner_image VARCHAR(400) NOT NULL,
-  CONSTRAINT chans_channels_id_fk FOREIGN KEY (id) REFERENCES youtube.entities.channels (id)
+	banner_image VARCHAR(400) NOT NULL
 );
 
 CREATE UNIQUE INDEX chans_chan_serial_uindex ON youtube.entities.chans (serial);
