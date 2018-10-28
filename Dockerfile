@@ -1,4 +1,4 @@
-FROM postgres:10.5-alpine
+FROM timescale/timescaledb
 
 USER postgres
 ENV LANG en_US.utf8
