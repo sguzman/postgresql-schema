@@ -12,18 +12,9 @@ CREATE TABLE youtube.entities.chans(
 	title VARCHAR(100) NOT NULL,
 	custom_url VARCHAR(100),
 	description VARCHAR(8000),
+	country CHAR(2),
 	joined TIMESTAMP NOT NULL,
-	thumbnail VARCHAR(400),
-	topic_ids VARCHAR(10) [],
-	topic_categories VARCHAR(200) [],
-	privacy_status VARCHAR(10) NOT NULL,
-	is_linked BOOLEAN NOT NULL,
-	long_uploads VARCHAR(25) NOT NULL,
-	tracking_id VARCHAR(25),
-	moderate_comments BOOLEAN,
-	show_related_channels BOOLEAN,
-	show_browse BOOLEAN,
-	banner_image VARCHAR(400) NOT NULL
+	topic_categories VARCHAR(200) []
 );
 
 CREATE UNIQUE INDEX chans_chan_serial_uindex ON youtube.entities.chans (serial);
