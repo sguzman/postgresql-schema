@@ -11,7 +11,6 @@ CREATE TABLE youtube.entities.chans(
 	serial CHAR(24) NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	custom_url VARCHAR(100),
-	description VARCHAR(8000),
 	country CHAR(2),
 	joined TIMESTAMP NOT NULL
 );
