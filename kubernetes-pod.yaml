@@ -69,7 +69,7 @@ spec:
         claimName: youtube-pv-claim
   restartPolicy: Always
   containers:
-    - image: docker.io/guzmansalv/youtube_postgres
+    - image: docker.io/guzmansalv/postgres_ts_youtube
       imagePullPolicy: Always
       name: postgres
       ports:
