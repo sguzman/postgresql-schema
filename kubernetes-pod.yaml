@@ -129,17 +129,22 @@ spec:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: hello
+  name: youtube-cron
+  labels:
+    name: youtube
 spec:
   schedule: "*/1 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            name: youtube
         spec:
           containers:
-            - name: hello
-              image: busybox
+            - name: post-cron
+              image: postgres:10.5-alpine
               args:
                 - /bin/sh
                 - -c
