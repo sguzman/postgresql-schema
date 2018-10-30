@@ -269,4 +269,8 @@ spec:
             - name: HOST
               value: "weighted-service.youtube.svc.cluster.local"
             - name: PORT
-              value: 8080
+              value: "8080"
+            - name: DB_HOST
+              value: "postgres-service.youtube.svc.cluster.local"
+            - name: DB_PORT
+              value: "5432"
