@@ -270,9 +270,9 @@ spec:
   containers:
     - image: docker.io/guzmansalv/youtube_django_service
       env:
-        - name: DB_HOST
+        - name: HOST
           value: "postgres-service.youtube.svc.cluster.local"
-        - name: DB_PORT
+        - name: PORT
           value: "5432"
       imagePullPolicy: Always
       name: django
