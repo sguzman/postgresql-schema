@@ -101,7 +101,7 @@ metadata:
     name: youtube
     tier: youtube-chan-stats-replicaset
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       tier: youtube-chan-stats-replicaset
@@ -190,4 +190,83 @@ spec:
       name: grafana
       ports:
         - containerPort: 3000
-          name: postgres
+          name: grafana-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: youtube
+  name: weighted-service
+  labels:
+    name: youtube
+spec:
+  ports:
+    - name: weighted
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30002
+  selector:
+    app: weighted
+  type: NodePort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: youtube
+  name: weighted-pod
+  labels:
+    app: weighted
+    name: youtube
+spec:
+  hostname: weighted-pod
+  subdomain: post
+  securityContext:
+    fsGroup: 1234
+    runAsUser: 0
+  restartPolicy: Always
+  containers:
+    - image: docker.io/guzmansalv/youtube_weighted_service
+      env:
+        - name: DB_HOST
+          value: "postgres-service.youtube.svc.cluster.local"
+        - name: DB_PORT
+          value: "5432"
+      imagePullPolicy: Always
+      name: weighted
+      ports:
+        - containerPort: 8080
+          name: weighted-port
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: youtube-weighted-stats-replicaset
+  labels:
+    name: youtube
+    tier: youtube-weighted-stats-replicaset
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      tier: youtube-weighted-stats-replicaset
+  template:
+    metadata:
+      namespace: youtube
+      name: youtube-weights
+      labels:
+        name: youtube
+        tier: youtube-weighted-stats-replicaset
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: docker.io/guzmansalv/youtube_weighted_consumer
+          imagePullPolicy: Always
+          name: youtube-weights
+          env:
+            - name: API_KEY
+              value: "AIzaSyAOJey2cpa5GdTXRfU73ocrmeW188soOv8|AIzaSyAMrmQxJcjbYpHNfVIeJH7JxmjD2AtZkr0|AIzaSyDb5la9mzV4npKYzZC7nEOVBri3jA-XuRU|AIzaSyDZOhJUEdWBWtrIX53slXY3x3dczTqIkSc|AIzaSyC38ZIaFBDP1mtPqpx6oGGm60WGFFMHJgQ|AIzaSyBo8rwEPhWxcb1rIAMQQmTtpYPbF4pL3kw"
+            - name: HOST
+              value: "weighted-service.youtube.svc.cluster.local"
+            - name: PORT
+              value: 8080
