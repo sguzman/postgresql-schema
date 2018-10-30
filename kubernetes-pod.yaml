@@ -205,7 +205,7 @@ metadata:
     name: youtube
     tier: youtube-weighted-stats-replicaset
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       tier: youtube-weighted-stats-replicaset
