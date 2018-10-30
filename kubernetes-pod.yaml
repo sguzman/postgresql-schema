@@ -133,7 +133,7 @@ metadata:
   labels:
     name: youtube
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "* * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -150,47 +150,6 @@ spec:
                 - -c
                 - psql --host=postgres-service.youtube.svc.cluster.local --user=postgres --port=5432 --no-password youtube -c 'delete from youtube.entities.chan_stats where views = 0 OR videos = 0'
           restartPolicy: OnFailure
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: youtube
-  name: grafana-service
-  labels:
-    name: youtube
-spec:
-  ports:
-    - name: grafana
-      protocol: TCP
-      port: 3000
-      targetPort: 3000
-      nodePort: 30001
-  selector:
-    app: grafana
-  type: NodePort
----
-apiVersion: v1
-kind: Pod
-metadata:
-  namespace: youtube
-  name: grafana-pod
-  labels:
-    app: grafana
-    name: youtube
-spec:
-  hostname: grafana-pod
-  subdomain: post
-  securityContext:
-    fsGroup: 1234
-    runAsUser: 0
-  restartPolicy: Always
-  containers:
-    - image: docker.io/grafana/grafana
-      imagePullPolicy: Always
-      name: grafana
-      ports:
-        - containerPort: 3000
-          name: grafana-port
 ---
 apiVersion: v1
 kind: Service
