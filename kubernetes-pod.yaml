@@ -148,7 +148,7 @@ spec:
               args:
                 - /bin/sh
                 - -c
-                - psql --host=postgres-service.youtube.svc.cluster.local --user=postgres --port=5432 --no-password youtube -c 'delete from youtube.entities.chan_stats where views = 0 OR videos = 0'
+                - psql --host=postgres-service.youtube.svc.cluster.local --user=postgres --port=5432 --no-password youtube -c 'delete from youtube.entities.chan_stats where subs = 0 OR views = 0 OR videos = 0'
           restartPolicy: OnFailure
 ---
 apiVersion: v1
