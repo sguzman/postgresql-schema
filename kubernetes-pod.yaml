@@ -83,7 +83,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   namespace: youtube
-  name: dbase-scraper
+  name: dbase-pod
   labels:
     name: youtube
 spec:
@@ -91,7 +91,7 @@ spec:
   containers:
     - image: docker.io/guzmansalv/dbase_channels
       imagePullPolicy: Always
-      name: dbase-scraper
+      name: dbase-pod
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
