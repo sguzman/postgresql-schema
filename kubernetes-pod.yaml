@@ -166,6 +166,8 @@ spec:
           value: "postgres-service.youtube.svc.cluster.local"
         - name: DB_PORT
           value: "5432"
+        - name: PORT
+          value: "8080"
       imagePullPolicy: Always
       name: weighted
       ports:
