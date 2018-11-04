@@ -58,6 +58,13 @@ metadata:
     app: postgres
     name: youtube
 spec:
+  nodeSelector:
+    dedicated: master
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: master
+      effect: NoSchedule
   hostname: postgres-pod
   subdomain: post
   securityContext:
