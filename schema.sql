@@ -14,7 +14,7 @@ CREATE TABLE youtube.entities.chan_subs
   subs bigint NOT NULL
 );
 
-SELECT create_hypertable('youtube.entities.chan_subs', 'time', 'serial', 100000);
+SELECT create_hypertable('youtube.entities.chan_subs', 'time', 'serial', 32767);
 
 CREATE TABLE youtube.entities.chan_videos
 (
@@ -23,7 +23,7 @@ CREATE TABLE youtube.entities.chan_videos
   videos int NOT NULL
 );
 
-SELECT create_hypertable('youtube.entities.chan_videos', 'time', 'serial', 100000);
+SELECT create_hypertable('youtube.entities.chan_videos', 'time', 'serial', 32767);
 
 CREATE TABLE youtube.entities.chan_views
 (
@@ -32,7 +32,7 @@ CREATE TABLE youtube.entities.chan_views
   views bigint NOT NULL
 );
 
-SELECT create_hypertable('youtube.entities.chan_views', 'time', 'serial', 100000);
+SELECT create_hypertable('youtube.entities.chan_views', 'time', 'serial', 32767);
 
 create view space_usage as SELECT *, pg_size_pretty(total_bytes) AS total
  , pg_size_pretty(index_bytes) AS INDEX
