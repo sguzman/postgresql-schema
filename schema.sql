@@ -16,7 +16,7 @@ CREATE TABLE youtube.entities.chan_subs
 
 SELECT create_hypertable('youtube.entities.chan_subs', 'time', 'serial', 1000);
 
-CREATE TABLE youtube.entities.chan_stats
+CREATE TABLE youtube.entities.chan_videos
 (
   time timestamptz DEFAULT now() NOT NULL,
   serial char(24) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE youtube.entities.chan_stats
 
 SELECT create_hypertable('youtube.entities.chan_videos', 'time', 'serial', 1000);
 
-CREATE TABLE youtube.entities.chan_subs
+CREATE TABLE youtube.entities.chan_views
 (
   time timestamptz DEFAULT now() NOT NULL,
   serial char(24) NOT NULL,
