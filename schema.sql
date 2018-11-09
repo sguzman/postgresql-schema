@@ -9,7 +9,7 @@ CREATE UNIQUE INDEX channels_serial_uindex ON youtube.entities.channels (serial)
 
 CREATE TABLE youtube.entities.chan_subs
 (
-  time timestamptz DEFAULT now() NOT NULL,
+  time timestamptz PRIMARY KEY DEFAULT now() NOT NULL,
   serial char(24) NOT NULL,
   subs bigint NOT NULL
 );
@@ -18,7 +18,7 @@ SELECT create_hypertable('youtube.entities.chan_subs', 'time', 'serial', 1000);
 
 CREATE TABLE youtube.entities.chan_videos
 (
-  time timestamptz DEFAULT now() NOT NULL,
+  time timestamptz PRIMARY KEY DEFAULT now() NOT NULL,
   serial char(24) NOT NULL,
   videos int NOT NULL
 );
@@ -27,7 +27,7 @@ SELECT create_hypertable('youtube.entities.chan_videos', 'time', 'serial', 1000)
 
 CREATE TABLE youtube.entities.chan_views
 (
-  time timestamptz DEFAULT now() NOT NULL,
+  time timestamptz PRIMARY KEY DEFAULT now() NOT NULL,
   serial char(24) NOT NULL,
   views bigint NOT NULL
 );
