@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: youtube-pv-volume
+  namespace: youtube
+  annotations:
+    pv.beta.kubernetes.io/gid: "1234"
+  labels:
+    type: local
+    name: youtube
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/montezuma/data/postgres/"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: youtube-pv-claim
+  labels:
+    name: youtube
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: youtube
+  name: postgres-service
+  labels:
+    name: youtube
+spec:
+  ports:
+    - name: postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 30000
+  selector:
+    app: postgres
+  type: NodePort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: youtube
+  name: postgres-pod
+  labels:
+    app: postgres
+    name: youtube
+spec:
+  hostname: postgres-pod
+  subdomain: post
+  securityContext:
+    fsGroup: 1234
+    runAsUser: 0
+  volumes:
+    - name: youtube-pv-storage
+      persistentVolumeClaim:
+        claimName: youtube-pv-claim
+  restartPolicy: Always
+  containers:
+    - image: docker.io/guzmansalv/postgres_ts_youtube
+      imagePullPolicy: Always
+      name: postgres
+      ports:
+        - containerPort: 5432
+          name: postgres
+      volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: youtube-pv-storage
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: youtube
+  name: dbase-pod
+  labels:
+    name: youtube
+spec:
+  restartPolicy: Always
+  containers:
+    - image: docker.io/guzmansalv/youtube_dbase_scraper
+      imagePullPolicy: Always
+      name: dbase-pod
+      env:
+        - name: DB_HOST
+          value: "postgres-service.youtube.svc.cluster.local"
+        - name: DB_PORT
+          value: "5432"
