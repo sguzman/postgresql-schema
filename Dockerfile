@@ -1,3 +1,5 @@
+# guzmansalv/postgres_ts_youtube
+ARG PG_VERSION=11
 FROM timescale/timescaledb
 
 USER postgres

@@ -7,26 +7,32 @@ CREATE TABLE youtube.entities.channels(
 );
 CREATE UNIQUE INDEX channels_serial_uindex ON youtube.entities.channels (serial);
 
-CREATE TABLE youtube.entities.chans(
-serial CHAR(24) NOT NULL,
-title VARCHAR(100) NOT NULL,
-custom_url VARCHAR(100),
-country CHAR(2),
-joined TIMESTAMP NOT NULL
-);
-
-CREATE UNIQUE INDEX chans_chan_serial_uindex ON youtube.entities.chans (serial);
-
-CREATE TABLE youtube.entities.chan_stats
+CREATE TABLE youtube.entities.chan_subs
 (
-time timestamptz DEFAULT now() NOT NULL,
-serial char(24) NOT NULL,
-subs bigint NOT NULL,
-videos int NOT NULL,
-views bigint NOT NULL
+  time timestamptz DEFAULT now() NOT NULL,
+  serial char(24) NOT NULL,
+  subs bigint NOT NULL
 );
 
-SELECT create_hypertable('youtube.entities.chan_stats', 'time');
+SELECT create_hypertable('youtube.entities.chan_subs', 'time', 'serial', 32767);
+
+CREATE TABLE youtube.entities.chan_videos
+(
+  time timestamptz DEFAULT now() NOT NULL,
+  serial char(24) NOT NULL,
+  videos int NOT NULL
+);
+
+SELECT create_hypertable('youtube.entities.chan_videos', 'time', 'serial', 32767);
+
+CREATE TABLE youtube.entities.chan_views
+(
+  time timestamptz DEFAULT now() NOT NULL,
+  serial char(24) NOT NULL,
+  views bigint NOT NULL
+);
+
+SELECT create_hypertable('youtube.entities.chan_views', 'time', 'serial', 32767);
 
 create view space_usage as SELECT *, pg_size_pretty(total_bytes) AS total
  , pg_size_pretty(index_bytes) AS INDEX
